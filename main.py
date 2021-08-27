@@ -1,16 +1,11 @@
-# This is a sample Python script.
+import requests
+from bs4 import BeautifulSoup
+import settings
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+img_link = []
+request = requests.get(settings.url)
+content = request.content
+soup = BeautifulSoup(content, "html.parser")
+imgs = soup.find_all('div', {'class': 'catalog-element-media__thumb'})
+for img in imgs:
+    img_link.append(img.get('data-src'))
